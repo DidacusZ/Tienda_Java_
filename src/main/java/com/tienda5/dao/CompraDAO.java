@@ -13,6 +13,9 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+/**
+ * Entidad representada en la BD como la tabla compras (modelo virtual) DAO
+ */
 @Entity
 @Table(name = "compras", schema = "logica")
 public class CompraDAO {

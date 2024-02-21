@@ -9,6 +9,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
+/**
+ * Entidad representada en la BD como la tabla carritos (modelo virtual) DAO
+ */
 @Entity
 @Table(name = "carritos", schema = "logica")
 public class CarritoDAO {

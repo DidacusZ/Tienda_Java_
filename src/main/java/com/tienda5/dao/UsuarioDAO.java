@@ -5,7 +5,7 @@ import java.util.List;
 import jakarta.persistence.*;
 
 /**
- * entidad representada en la BD como la tabla usuarios (modelo virtual) DAO
+ * Entidad representada en la BD como la tabla usuarios (modelo virtual) DAO
  */
 @Entity
 @Table(name = "usuarios", schema = "gestion_usu")
@@ -46,6 +46,7 @@ public class UsuarioDAO {
 	private List<CompraDAO> compra;
 
         
+	//objetos
 	public UsuarioDAO() {
 		super();
 	}
@@ -61,6 +62,7 @@ public class UsuarioDAO {
 		this.imagen = imagen;
 	}
 
+	//getters y setters
 	public long getId() {
 		return id;
 	}

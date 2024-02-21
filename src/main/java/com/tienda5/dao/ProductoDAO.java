@@ -12,6 +12,9 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
+/**
+ * Entidad representada en la BD como la tabla productos (modelo virtual) DAO
+ */
 @Entity
 @Table(name = "productos", schema = "logica")
 public class ProductoDAO {
