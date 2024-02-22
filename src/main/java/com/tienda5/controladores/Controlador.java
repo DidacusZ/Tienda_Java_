@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping
 public class Controlador {
 
-	@GetMapping("/demo")
-	public String showDemo() {
-		return "hola";
+	@GetMapping("")
+	public String index() {
+		return "index";
 	}
 }

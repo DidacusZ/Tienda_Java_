@@ -1,6 +1,7 @@
 package com.tienda5.servicios;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.tienda5.dao.UsuarioDAO;
@@ -15,8 +16,11 @@ public class UsuarioServicioImpl implements UsuarioServicioInterfaz {
 
 	//Interfaces necesarias para el servicio
 
-	@Autowired	//Facilita la gestión de los componentes de la aplicación. Inyeccion de dependencias automáticamente en un bean
+	@Autowired//Facilita la gestión de los componentes de la aplicación. Inyeccion de dependencias automáticamente en un bean
 	private UsuarioRepositorio usuarioRepositorio;
+	
+	@Autowired
+	private BCryptPasswordEncoder encriptarClave;
 
 	@Autowired
 	private UsuarioDTOaDAOInterfaz usuarioDTOaDAO;		
@@ -35,11 +39,19 @@ public class UsuarioServicioImpl implements UsuarioServicioInterfaz {
 	@Override
 	public UsuarioDTO guardarUsuario(UsuarioDTO usuarioDTO) {
 
+		//encriptar contraseña
 		UsuarioDAO usuario = usuarioDTOaDAO.usuarioDTOaDAO(usuarioDTO);
 		usuario.setRol("USUARIO");
 		usuarioRepositorio.save(usuario);
 		
-		return null;
+		return usuarioDTO;
 	}
 
+	
+	//spring security
+	/*
+    private String encriptarConBCrypt(String password) {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        return encoder.encode(password);
+    }*/
 }

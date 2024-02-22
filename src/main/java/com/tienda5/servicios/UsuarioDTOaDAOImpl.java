@@ -26,6 +26,7 @@ public class UsuarioDTOaDAOImpl implements UsuarioDTOaDAOInterfaz {
 			usuarioDao.setEmail(usuarioDTO.getEmail());
 			usuarioDao.setClave(usuarioDTO.getClave());
 			//imagen
+			usuarioDao.setImagen(usuarioDTO.getImagen());
 			
 			return usuarioDao;
 		} catch (Exception ex) {

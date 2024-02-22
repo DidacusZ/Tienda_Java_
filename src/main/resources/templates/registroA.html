@@ -53,39 +53,39 @@
 
  -->
                         
-            <form>
+            <form th:action="@{/registro}" enctype="multipart/form-data" method="post" th:object="${usuarioDTO}">
                 <div class="form-group input-group mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text">Nombre completo:</span>
                       </div>
-                    <input class="form-control" placeholder="Nombre completo" type="text" required>
+                    <input th:field="*{nombre}" class="form-control" placeholder="Nombre completo" type="text" required>
                 </div>
 
                 <div class="form-group input-group mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text">Movil:</span>
                       </div>
-                    <input class="form-control" placeholder="Movil" type="text">
+                    <input th:field="*{movil}" class="form-control" placeholder="Movil" type="text">
                 </div>
                 <div class="form-group input-group mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text">Foto:</span>
                       </div>
-                    <input class="form-control" placeholder="foto" type="number">
+                    <input th:field="*{imagen}" class="form-control" placeholder="Foto (opcional)" type="text">
                 </div>
 
                 <div class="form-group input-group mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text">Email:</span>
                       </div>
-                    <input class="form-control" placeholder="Email" type="email" required>
+                    <input th:field="*{email}" class="form-control" placeholder="Email" type="email" required>
                 </div>
                 
                 <div class="form-group input-group mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text">Contraseña:</span>
                     </div>
-                    <input class="form-control" placeholder="Contraseña" type="password" required>
+                    <input th:field="*{clave}" class="form-control" placeholder="Contraseña" type="password" required>
                 </div>
                 <div class="form-group input-group mb-3">
                     <div class="input-group-prepend">
@@ -99,7 +99,7 @@
                     <button type="submit" class="btn btn-primary btn-block"> Crear cuenta </button>
                 </div>
                 <p class="text-center">¿Ya estas registrado?
-                <a href="">Inicia sesión</a>
+                <a th:href="@{/inicioSesion}">Inicia sesión</a>
                 </p>
             </form>
 
