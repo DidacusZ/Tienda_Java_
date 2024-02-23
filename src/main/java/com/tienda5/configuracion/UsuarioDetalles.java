@@ -27,27 +27,35 @@ public class UsuarioDetalles implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-	    System.out.printf("\nEl usuario %s esta intentando iniciar sesión\n", email);//formato
-	    FicheroLog.escribir("El usuario " +email+ " esta intentando iniciar sesión");
+		try {
+			System.out.printf("\nEl usuario %s esta intentando iniciar sesión\n", email);//formato
+		    FicheroLog.escribir("[INFO] [UsuarioDetalles-loadUserByUsername()] El usuario " +email+ " esta intentando iniciar sesión");
 
-		//Busca un usuario por el email
-		UsuarioDAO usuario = usuRepo.findFirstByEmail(email);
+			//Busca un usuario por el email
+			UsuarioDAO usuario = usuRepo.findFirstByEmail(email);
+			
+		    //Comprueba si el usuario existe
+		    if (usuario == null) {
+		    	FicheroLog.escribir("[INFO] [UsuarioDetalles-loadUserByUsername()] El usuario " +email+ " no existe");
+		        throw new UsernameNotFoundException("Usuario no encontrado: " + email);
+		    }
+			//Construir la instancia con datos del usuario
+			UserBuilder contructor = null;
+		    	System.out.printf("\nEl suario %s ha iniciado sesión\n", email);
+		    	FicheroLog.escribir("[INFO] [UsuarioDetalles-loadUserByUsername()] El usuario " +email+ " ha iniciado sesión");
+
+		    	contructor = User.withUsername(email);
+		    	contructor.disabled(false);
+				contructor.password(usuario.getClave());
+				contructor.authorities(usuario.getRol());
+
+			return contructor.build();
+		}catch(Exception e){
+			System.out.printf("\n[ERROR] [UsuarioDetalles-loadUserByUsername()] Al intentar iniciar sesion con el email: %s\n",email);
+	    	FicheroLog.escribir("[ERROR] [UsuarioDetalles-loadUserByUsername()] Al intentar iniciar sesion con el email: " + email);
+			return null;
+		}
 		
-	    //Comprueba si el usuario existe
-	    if (usuario == null) {
-	    	FicheroLog.escribir("El usuario " +email+ " no existe");
-	        throw new UsernameNotFoundException("Usuario no encontrado: " + email);        
-	    }
-		//Construir la instancia con datos del usuario
-		UserBuilder contructor = null;
-	    	System.out.printf("\nEl suario %s ha iniciado sesión\n", usuario.getEmail());
-	    	FicheroLog.escribir("El usuario " +email+ " ha iniciado sesión");
-
-	    	contructor = User.withUsername(email);
-	    	contructor.disabled(false);
-			contructor.password(usuario.getClave());
-			contructor.authorities(usuario.getRol());
-
-		return contructor.build();
+		
 	}
 }

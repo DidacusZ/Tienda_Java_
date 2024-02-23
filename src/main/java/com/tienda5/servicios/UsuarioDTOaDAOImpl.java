@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.tienda5.Fichero.FicheroLog;
 import com.tienda5.dao.UsuarioDAO;
 import com.tienda5.dto.UsuarioDTO;
 
@@ -26,11 +27,16 @@ public class UsuarioDTOaDAOImpl implements UsuarioDTOaDAOInterfaz {
 			usuarioDao.setEmail(usuarioDTO.getEmail());
 			usuarioDao.setClave(usuarioDTO.getClave());
 			//imagen
-			usuarioDao.setImagen(usuarioDTO.getImagen());
-			
+			//usuarioDao.setImagen(usuarioDTO.getImagen());
+			/*
+			if(usuarioDTO.getImagen() != null) {
+				usuarioDao.setImagen(fotoServicio.convertirAarrayBytes(usuarioDTO.getImagen()));
+			}
+			*/
 			return usuarioDao;
-		} catch (Exception ex) {
-			System.out.println("\n[ERROR] [UsuarioDTOaDAOImpl - usuarioDTOaDAO] - Al convertir UsuarioDTO a UsuarioDAO [return null]: " + ex);
+		} catch (Exception e) {
+			System.err.println("\n[ERROR] [UsuarioDTOaDAOImpl-usuarioDTOaDAO()] - Al convertir UsuarioDTO a UsuarioDAO: " + e);
+			FicheroLog.escribir("[ERROR] [UsuarioDTOaDAOImpl-usuarioDTOaDAO()] - Al convertir UsuarioDTO a UsuarioDAO");
 			return null;
 		}
 
@@ -46,8 +52,9 @@ public class UsuarioDTOaDAOImpl implements UsuarioDTOaDAOInterfaz {
 				listaUsuDao.add(usuarioDTOaDAO(usuDto));			
 			return listaUsuDao;
 			
-		}catch(Exception ex) {
-			System.out.println("\n[ERROR] [UsuarioDTOaDAOImpl - usuarioDTOaDAO] - Al convertir la lista de usuarios de DTO a DAO [return null]: " + ex);
+		}catch(Exception e) {
+			System.err.println("\n[ERROR] [UsuarioDTOaDAOImpl-listaUsuarioDTOaDAO()] - Al convertir la lista de usuarios de DTO a DAO: " + e);
+			FicheroLog.escribir("[ERROR] [UsuarioDTOaDAOImpl-listaUsuarioDTOaDAO()] - Al convertir la lista de usuarios de DTO a DAO");
 			return null;
 		}
 

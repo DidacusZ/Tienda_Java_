@@ -19,8 +19,15 @@ public class InicioControlador {
 	 */
 	@GetMapping
 	public String inicioControlador() {
-		FicheroLog.escribir("El usuario a entrado en la vista inicioSesion");
-		return "inicioSesion";
+		try {
+			FicheroLog.escribir("[INFO] [InicioControlador-inicioControlador()] - El usuario a entrado en la vista inicioSesion");
+			return "inicioSesion";
+		}catch(Exception e){
+			FicheroLog.escribir("[ERROR] [InicioControlador-inicioControlador()] - Al entrar en la vista inicioSesion");
+			System.err.println("\n[ERROR] [InicioControlador-inicioControlador()] - Al entrar en la vista inicioSesion: "+e);
+			return "inicioSesion";
+		}		
+		
 	}
 	
 }

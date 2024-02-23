@@ -32,8 +32,7 @@ public class UsuarioDAO {
 	private String rol;
 	
 	@Column(name = "img_producto", nullable = true)//imagen real bytes
-	private String imagen;
-	
+	private byte[] imagen;	
 	
 	//relaciones
 	
@@ -47,11 +46,8 @@ public class UsuarioDAO {
 
         
 	//objetos
-	public UsuarioDAO() {
-		super();
-	}
-
-	public UsuarioDAO(long id, String nombre, String movil, String email, String clave, String rol, String imagen) {
+	public UsuarioDAO(long id, String nombre, String movil, String email, String clave, String rol, byte[] imagen,
+			CarritoDAO carrito, List<CompraDAO> compra) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
@@ -60,13 +56,19 @@ public class UsuarioDAO {
 		this.clave = clave;
 		this.rol = rol;
 		this.imagen = imagen;
+		this.carrito = carrito;
+		this.compra = compra;
 	}
+	public UsuarioDAO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 
 	//getters y setters
 	public long getId() {
 		return id;
 	}
-
 	public void setId(long id) {
 		this.id = id;
 	}
@@ -74,7 +76,6 @@ public class UsuarioDAO {
 	public String getNombre() {
 		return nombre;
 	}
-
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
@@ -82,15 +83,13 @@ public class UsuarioDAO {
 	public String getMovil() {
 		return movil;
 	}
-
 	public void setMovil(String movil) {
 		this.movil = movil;
 	}
-
+	
 	public String getEmail() {
 		return email;
 	}
-
 	public void setEmail(String email) {
 		this.email = email;
 	}
@@ -98,7 +97,6 @@ public class UsuarioDAO {
 	public String getClave() {
 		return clave;
 	}
-
 	public void setClave(String clave) {
 		this.clave = clave;
 	}
@@ -106,17 +104,29 @@ public class UsuarioDAO {
 	public String getRol() {
 		return rol;
 	}
-
 	public void setRol(String rol) {
 		this.rol = rol;
 	}
 
-	public String getImagen() {
+	public byte[] getImagen() {
 		return imagen;
 	}
-
-	public void setImagen(String imagen) {
+	public void setImagen(byte[] imagen) {
 		this.imagen = imagen;
 	}
-	
+
+	public CarritoDAO getCarrito() {
+		return carrito;
+	}
+	public void setCarrito(CarritoDAO carrito) {
+		this.carrito = carrito;
+	}
+
+	public List<CompraDAO> getCompra() {
+		return compra;
+	}
+	public void setCompra(List<CompraDAO> compra) {
+		this.compra = compra;
+	}
+
 }

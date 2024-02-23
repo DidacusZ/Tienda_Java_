@@ -2,22 +2,23 @@ function revisarContraseña() {
     const clave = document.getElementById('clave').value;
     const clave2 = document.getElementById('clave2').value;
     const mensajeClave = document.getElementById('mensajeClave');
+    mensajeClave.style.fontSize = '30px';
 
     if (clave === "" && clave2 === "") {
-        mensajeClave.innerHTML = '<span class="badge bg-danger">No puede dejar los campos contraseñas vacíos</span>';
+        mensajeClave.innerHTML = '<span class="badge bg-danger">La contraseña no puede estar vacía</span>';
         mensajeClave.style.color = 'black';
         document.getElementById("boton").disabled = true;
         boton.style.backgroundColor = "#959595";
         
     } else if (clave === clave2) 
     {
-            mensajeClave.innerHTML = '<span class="badge bg-success">Contraseña válida</span>';
-            mensajeClave.style.color = 'black';
-            document.getElementById("boton").disabled = false;
-            boton.style.backgroundColor = "#5993d3";
+        mensajeClave.innerHTML = '<span class="badge bg-success">Contraseña correcta</span>';
+        mensajeClave.style.color = 'black';
+        document.getElementById("boton").disabled = false;
+        boton.style.backgroundColor = "#007bff";
     } else 
     {
-        mensajeClave.innerHTML = '<span class="badge bg-danger">Las contraseñas introducidas no son iguales</span>';
+        mensajeClave.innerHTML = '<span class="badge bg-danger">Las contraseñas no coinciden</span>';
         mensajeClave.style.color = 'black';
         document.getElementById("boton").disabled = true;
         boton.style.backgroundColor = "#959595";
@@ -36,6 +37,21 @@ function mostrarNotificacion(titulo, mensaje, tipo) {
         }
     });
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function confirmarLogout() {
     Swal.fire({

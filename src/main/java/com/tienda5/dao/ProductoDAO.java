@@ -37,7 +37,7 @@ public class ProductoDAO {
 	private int cantidad;
 
 	@Column(name = "img_producto", nullable = true)//imagen real bytes
-	private String imagen;
+	private byte[] imagen;
 	
 	//relaciones
 	

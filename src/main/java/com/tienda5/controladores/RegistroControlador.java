@@ -47,9 +47,15 @@ public class RegistroControlador {
 	 */
 	@GetMapping
 	public String mostrarRegistro(Model modelo) {
-		FicheroLog.escribir("El usuario a entrado en la vista registro");
-		modelo.addAttribute("usuarioDTO", new UsuarioDTO());		
-		return "registroA";
+		try {
+			FicheroLog.escribir("[INFO] [RegistroControlador-mostrarRegistro()] - El usuario a entrado en la vista registro");
+			modelo.addAttribute("usuarioDTO", new UsuarioDTO());		
+			return "registro";
+		}catch(Exception e){
+			FicheroLog.escribir("[ERROR] [RegistroControlador-mostrarRegistro()] - Al entrar en la vista registro");
+			System.err.println("\n[ERROR] [[RegistroControlador-mostrarRegistro()] - Al entrar en la vista registro: "+e);
+			return "registro";
+		}		
 	}	
 	
 	/**
@@ -60,16 +66,25 @@ public class RegistroControlador {
 	 */
 	@PostMapping
 	public String RegistrarUsuario(@ModelAttribute UsuarioDTO usuarioDTO, Model modelo) {
-		
-		UsuarioDTO usuarioNuevo = usuarioServicioInterfaz.guardarUsuario(usuarioDTO);
-		
-
-		//comprobar
-		/*
-		 * si existe el mail en BD
-		 * 
-		 */		
-		
-		return "inicioSesion";
+		try {
+			UsuarioDTO usuarioNuevo = usuarioServicioInterfaz.guardarUsuario(usuarioDTO);
+				/*		
+			if (usuarioNuevo == null) {
+				modelo.addAttribute("emailYaRegistrado", "Ya existe un usuario con ese email");
+				System.err.println("email registr");
+				return "registro";
+			}*/
+			
+			return "inicioSesion";
+			
+		} catch (IllegalArgumentException e) {
+	        modelo.addAttribute("emailYaRegistrado", "Ya existe un usuario con ese email");
+	        return "registro";
+		        
+		}catch(Exception e){
+			FicheroLog.escribir("[ERROR] [RegistroControlador-RegistrarUsuario()] - Al mandar datos para registrar al usuario");
+			System.err.println("\n[ERROR] [[RegistroControlador-RegistrarUsuario()] - Al mandar datos para registrar al usuario: "+e);
+			return "registro";
+		}		
 	}
 }

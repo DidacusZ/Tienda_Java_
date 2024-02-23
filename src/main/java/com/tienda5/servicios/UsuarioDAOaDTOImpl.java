@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.tienda5.Fichero.FicheroLog;
 import com.tienda5.dao.UsuarioDAO;
 import com.tienda5.dto.UsuarioDTO;
 
@@ -29,7 +30,8 @@ public class UsuarioDAOaDTOImpl implements UsuarioDAOaDTOInterfaz {
 
 			return usuarioDto;
 		} catch (Exception ex) {
-			System.out.println("\n[ERROR] [UsuarioDAOaDTOImpl - usuarioDTOaDAO] - Al convertir UsuarioDAO a UsuarioDTO [return null]: " + ex);
+			System.err.println("\n[ERROR] [UsuarioDAOaDTOImpl-usuarioDTOaDAO()] - Al convertir UsuarioDAO a UsuarioDTO: " + ex);
+			FicheroLog.escribir("[ERROR] [UsuarioDAOaDTOImpl-usuarioDTOaDAO()] - Al convertir UsuarioDAO a UsuarioDTO");
 			return null;
 		}
 	}
@@ -45,10 +47,10 @@ public class UsuarioDAOaDTOImpl implements UsuarioDAOaDTOInterfaz {
 			return listaUsuDto;
 			
 		}catch(Exception ex) {
-			System.out.println("\n[ERROR] [UsuarioDAOaDTOImpl - usuarioDTOaDAO] - Al convertir la lista de usuarios de DAO a DTO [return null]: " + ex);
-		}
-		
-		return null;
+			System.err.println("\n[ERROR] [UsuarioDAOaDTOImpl-listaUsuarioDAOaDTO()] - Al convertir la lista de usuarios de DAO a DTO: " + ex);
+			FicheroLog.escribir("[ERROR] [UsuarioDAOaDTOImpl-listaUsuarioDAOaDTO()] - Al convertir la lista de usuarios de DAO a DTO");
+			return null;
+		}		
 	}
 
 }

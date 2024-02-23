@@ -11,7 +11,7 @@ public class Controlador {
 	
 	@GetMapping
     public String mostrarPerfilUsuario() {
-		FicheroLog.escribir("El usuario a entrado en la vista index (/)");
+		FicheroLog.escribir("[INFO] [Controlador-mostrarPerfilUsuario()] El usuario a entrado en la vista index (/)");
         return "index";
     }
 }

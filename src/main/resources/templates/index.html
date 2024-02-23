@@ -21,9 +21,11 @@
 				<a class="nav-link" aria-current="page" href="#">Inicio</a>
 			  </li>
 			</ul>
-			<form class="d-flex">
-			  <button th:action="@{/cerrarSesion}" class="btn btn-outline-danger" type="submit">Cerrar Sesión</button>
+			
+			<form class="d-flex" th:action="@{/cerrarSesion}" method="post">
+			  <button class="btn btn-outline-danger" type="submit">Cerrar Sesión</button>
 			</form>
+			
 		  </div>
 		</div>
 	  </nav>
