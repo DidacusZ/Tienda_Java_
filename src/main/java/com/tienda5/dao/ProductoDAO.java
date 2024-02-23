@@ -36,7 +36,7 @@ public class ProductoDAO {
 	@Column(name = "cant_producto", nullable = false)
 	private int cantidad;
 
-	@Column(name = "img_producto", nullable = true)
+	@Column(name = "img_producto", nullable = true)//imagen real bytes
 	private String imagen;
 	
 	//relaciones

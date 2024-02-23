@@ -8,7 +8,7 @@ import com.tienda5.dto.UsuarioDTO;
 public interface UsuarioDTOaDAOInterfaz {
 
 	/**
-	 * Convierte objeto usuario de DTO a DAO
+	 * Convierte usuario de DTO a DAO
 	 * @param usuarioDTO "DTO"
 	 * @return usuarioDAO "DAO"
 	 */
@@ -16,7 +16,7 @@ public interface UsuarioDTOaDAOInterfaz {
 	
 	
 	/**
-	 * Convierte una lista de objetos usuarios(dto) dao
+	 * Convierte una lista de objetos usuarios DTOs en una de DAOs
 	 * @param listaUsuarioDTO
 	 * @return
 	 */

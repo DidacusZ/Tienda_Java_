@@ -8,34 +8,42 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.tienda5.Fichero.FicheroLog;
 import com.tienda5.dao.UsuarioDAO;
 import com.tienda5.repositorios.UsuarioRepositorio;
 
+/**
+ * Delega en spring la autenticación y la autorización de la aplicación
+ */
 @Service("usuarioDetalles")
 public class UsuarioDetalles implements UserDetailsService {
 
 	@Autowired
 	private UsuarioRepositorio usuRepo;
-	
+
+	/**
+	 * Se sobrescribe para que Spring haga la autenticación del usuario
+	 */
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-	    System.out.printf("\nIntento de inicio de sesión para el usuario: %s\n", username);
+	    System.out.printf("\nEl usuario %s esta intentando iniciar sesión\n", email);//formato
+	    FicheroLog.escribir("El usuario " +email+ " esta intentando iniciar sesión");
 
-		//El nombre de usuario en la aplicación es el email
-		UsuarioDAO usuario = usuRepo.findFirstByEmail(username);
+		//Busca un usuario por el email
+		UsuarioDAO usuario = usuRepo.findFirstByEmail(email);
 		
-	    // Verificar si el usuario existe en la base de datos
+	    //Comprueba si el usuario existe
 	    if (usuario == null) {
-	        throw new UsernameNotFoundException("Usuario no encontrado: " + username);
+	    	FicheroLog.escribir("El usuario " +email+ " no existe");
+	        throw new UsernameNotFoundException("Usuario no encontrado: " + email);        
 	    }
-	    
-		//Construir la instancia de UserDetails con los datos del usuario
+		//Construir la instancia con datos del usuario
 		UserBuilder contructor = null;
+	    	System.out.printf("\nEl suario %s ha iniciado sesión\n", usuario.getEmail());
+	    	FicheroLog.escribir("El usuario " +email+ " ha iniciado sesión");
 
-	    	System.out.printf("\nUsuario encontrado en la base de datos: %s\n", usuario.getEmail());
-
-	    	contructor = User.withUsername(username);
+	    	contructor = User.withUsername(email);
 	    	contructor.disabled(false);
 			contructor.password(usuario.getClave());
 			contructor.authorities(usuario.getRol());

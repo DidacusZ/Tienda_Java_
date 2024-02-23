@@ -1,5 +1,6 @@
 package com.tienda5.dao;
 
+import java.util.Calendar;
 import java.util.List;
 
 import jakarta.persistence.Column;
@@ -29,7 +30,7 @@ public class CompraDAO {
 	private int cantidad;
 
 	@Column(name = "fch_compra", nullable = true)//date time
-	private String fecha;
+	private Calendar fecha;
 	
 	//relaciones
 	
@@ -46,6 +47,4 @@ public class CompraDAO {
         inverseJoinColumns = @JoinColumn(name = "id_producto")//relación de la otra entidad
     )
     private List<ProductoDAO> producto;
-
-
 }

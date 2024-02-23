@@ -19,7 +19,7 @@ public class UsuarioDAO {
 	@Column(name = "nom_usuario", nullable = true, length = 50)
 	private String nombre;
 
-	@Column(name = "mvl_usuario", nullable = true, unique = true)
+	@Column(name = "mvl_usuario", nullable = true)
 	private String movil;
 
 	@Column(name = "email_usuario", nullable = false, unique = true)
@@ -31,7 +31,7 @@ public class UsuarioDAO {
 	@Column(name = "rol_usuario", nullable = true)
 	private String rol;
 	
-	@Column(name = "img_producto", nullable = true)
+	@Column(name = "img_producto", nullable = true)//imagen real bytes
 	private String imagen;
 	
 	
