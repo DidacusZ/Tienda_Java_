@@ -10,4 +10,6 @@ public interface UsuarioServicioInterfaz {
 	 * @return
 	 */
 	public UsuarioDTO guardarUsuario(UsuarioDTO usuarioDTO);
+	
+	//public UsuarioDAO encontrarUsuario(String email);
 }

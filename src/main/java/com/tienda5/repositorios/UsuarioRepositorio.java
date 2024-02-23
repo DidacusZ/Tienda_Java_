@@ -17,5 +17,6 @@ public interface UsuarioRepositorio extends JpaRepository<UsuarioDAO, Long> {
 	 * @param email
 	 * @return
 	 */
-	public UsuarioDAO findFirstByEmail(String email);
+	public UsuarioDAO findFirstByEmail(String email);	
+
 }

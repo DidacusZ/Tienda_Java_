@@ -8,6 +8,7 @@ import com.tienda5.dto.UsuarioDTO;
 //import com.tienda5.servicios.UsuarioServicioInterfaz;
 import com.tienda5.servicios.UsuarioServicioInterfaz;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
@@ -18,17 +19,21 @@ import org.springframework.ui.Model;
 @RequestMapping("/registro")
 public class RegistroControlador {
 
-	private UsuarioServicioInterfaz usuarioServicioInterfaz;
-
+	@Autowired
+	private UsuarioServicioInterfaz usuarioServicioInterfaz;	
+	
 	/**
-	 * Constructor de las interfaces, es necesario para implementarlas sin fallos
+	 * Inyección de dependencias
+	 * Proporciona instancias de las interfaces cuando se crea esta instancia
+	 * Recibir e inicializar las dependencias necesarias para que esta clase (controlador) funcione correctamente
 	 * @param usuarioServicioInterfaz
 	 */
+	@Autowired
 	public RegistroControlador(UsuarioServicioInterfaz usuarioServicioInterfaz) {
 		super();
 		this.usuarioServicioInterfaz = usuarioServicioInterfaz;
-	}	
-	
+	}
+
 	/*
 	 * Model
 	 * Se utiliza para pasar datos entre el controlador y la vista.
@@ -43,8 +48,7 @@ public class RegistroControlador {
 	@GetMapping
 	public String mostrarRegistro(Model modelo) {
 		FicheroLog.escribir("El usuario a entrado en la vista registro");
-		modelo.addAttribute("usuarioDTO", new UsuarioDTO());
-		
+		modelo.addAttribute("usuarioDTO", new UsuarioDTO());		
 		return "registroA";
 	}	
 	
@@ -58,7 +62,8 @@ public class RegistroControlador {
 	public String RegistrarUsuario(@ModelAttribute UsuarioDTO usuarioDTO, Model modelo) {
 		
 		UsuarioDTO usuarioNuevo = usuarioServicioInterfaz.guardarUsuario(usuarioDTO);
-				
+		
+
 		//comprobar
 		/*
 		 * si existe el mail en BD

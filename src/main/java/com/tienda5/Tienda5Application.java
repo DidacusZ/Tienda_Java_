@@ -3,7 +3,6 @@ package com.tienda5;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.tienda5.Fichero.FicheroLog;
 
 /**
  * Clase que contiene el metodo por la que se lanza la app

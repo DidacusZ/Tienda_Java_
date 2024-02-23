@@ -45,6 +45,7 @@ public class ProductoDAO {
 	@ManyToMany
     @JoinTable(
         name = "productos_carritos",
+        schema = "logica",
         joinColumns = @JoinColumn(name = "id_producto"),//relación de esta entidad
         inverseJoinColumns = @JoinColumn(name = "id_carrito")//relación de la otra entidad
     )

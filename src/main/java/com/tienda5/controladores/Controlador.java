@@ -8,10 +8,10 @@ import com.tienda5.Fichero.FicheroLog;
 @Controller
 @RequestMapping
 public class Controlador {
-
+	
 	@GetMapping
-	public String index() {
-		FicheroLog.escribir("El usuario a entrado en la vista index");
-		return "index";
-	}
+    public String mostrarPerfilUsuario() {
+		FicheroLog.escribir("El usuario a entrado en la vista index (/)");
+        return "index";
+    }
 }

@@ -43,6 +43,7 @@ public class CompraDAO {
 	@ManyToMany
     @JoinTable(
         name = "compras_productos",
+        schema = "logica",
         joinColumns = @JoinColumn(name = "id_compra"),//relación de esta entidad
         inverseJoinColumns = @JoinColumn(name = "id_producto")//relación de la otra entidad
     )

@@ -24,7 +24,25 @@ public class UsuarioServicioImpl implements UsuarioServicioInterfaz {
 	private BCryptPasswordEncoder encriptarClave;
 
 	@Autowired
-	private UsuarioDTOaDAOInterfaz usuarioDTOaDAO;		
+	private UsuarioDTOaDAOInterfaz usuarioDTOaDAO;	
+	
+	/**
+	 * Inyección de dependencias
+	 * Proporciona instancias de las interfaces cuando se crea esta instancia
+	 * Recibir e inicializar las dependencias necesarias para que esta clase (servicio) funcione correctamente
+	 * @param usuarioRepositorio
+	 * @param encriptarClave
+	 * @param usuarioDTOaDAO
+	 */
+	@Autowired
+	public UsuarioServicioImpl(UsuarioRepositorio usuarioRepositorio, BCryptPasswordEncoder encriptarClave,
+			UsuarioDTOaDAOInterfaz usuarioDTOaDAO) {
+		super();
+		this.usuarioRepositorio = usuarioRepositorio;
+		this.encriptarClave = encriptarClave;
+		this.usuarioDTOaDAO = usuarioDTOaDAO;
+	}
+	
 
 	@Override
 	public UsuarioDTO guardarUsuario(UsuarioDTO usuarioDTO) {
@@ -43,5 +61,5 @@ public class UsuarioServicioImpl implements UsuarioServicioInterfaz {
 		
 		return usuarioDTO;
 	}
-
+	
 }
