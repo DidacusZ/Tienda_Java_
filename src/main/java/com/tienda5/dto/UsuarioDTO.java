@@ -12,13 +12,13 @@ public class UsuarioDTO {
 	private String email;
 	private String clave;
 	private String rol;
-	private byte[] imagen;
+	private String imagen;//Base64
 
 	public UsuarioDTO() {
 		super();
 	}
 
-	public UsuarioDTO(long id, String nombre, String movil, String email, String clave, String rol, byte[] imagen) {
+	public UsuarioDTO(long id, String nombre, String movil, String email, String clave, String rol, String imagen) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
@@ -77,12 +77,13 @@ public class UsuarioDTO {
 		this.rol = rol;
 	}
 
-	public byte[] getImagen() {
+	public String getImagen() {
 		return imagen;
 	}
 
-	public void setImagen(byte[] imagen) {
+	public void setImagen(String imagen) {
 		this.imagen = imagen;
 	}
+
 	
 }

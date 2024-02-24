@@ -3,6 +3,7 @@ package com.tienda5.servicios;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tienda5.Fichero.FicheroLog;
@@ -17,6 +18,14 @@ import com.tienda5.dto.UsuarioDTO;
 @Service
 public class UsuarioDAOaDTOImpl implements UsuarioDAOaDTOInterfaz {
 
+	@Autowired
+	private ImagenServicioInterfaz ImagenServicioInterfaz;
+		
+	public UsuarioDAOaDTOImpl(com.tienda5.servicios.ImagenServicioInterfaz imagenServicioInterfaz) {
+		super();
+		ImagenServicioInterfaz = imagenServicioInterfaz;
+	}
+
 	@Override
 	public UsuarioDTO usuarioDTOaDAO(UsuarioDAO usuarioDAO) {
 
@@ -27,10 +36,18 @@ public class UsuarioDAOaDTOImpl implements UsuarioDAOaDTOInterfaz {
 			usuarioDto.setEmail(usuarioDAO.getEmail());
 			usuarioDto.setClave(usuarioDAO.getClave());
 			//imagen
+			if(usuarioDAO.getImagen() != null) {
+				usuarioDto.setImagen(
+						ImagenServicioInterfaz.ArrayBYTESaBase64(usuarioDAO.getImagen())
+						);
+			}
 
+			System.out.println("[INFO] [UsuarioDAOaDTOImpl-usuarioDTOaDAO()] - Conversión correcta de UsuarioDAO a UsuarioDTO");
+			FicheroLog.escribir("[INFO] [UsuarioDAOaDTOImpl-usuarioDTOaDAO()] - Conversión correcta de UsuarioDAO a UsuarioDTO");
+			
 			return usuarioDto;
 		} catch (Exception ex) {
-			System.err.println("\n[ERROR] [UsuarioDAOaDTOImpl-usuarioDTOaDAO()] - Al convertir UsuarioDAO a UsuarioDTO: " + ex);
+			System.err.println("[ERROR] [UsuarioDAOaDTOImpl-usuarioDTOaDAO()] - Al convertir UsuarioDAO a UsuarioDTO: " + ex);
 			FicheroLog.escribir("[ERROR] [UsuarioDAOaDTOImpl-usuarioDTOaDAO()] - Al convertir UsuarioDAO a UsuarioDTO");
 			return null;
 		}
@@ -43,11 +60,15 @@ public class UsuarioDAOaDTOImpl implements UsuarioDAOaDTOInterfaz {
 		
 		try {			
 			for(UsuarioDAO usuDao : listaUsuarioDAO)
-				listaUsuDto.add(usuarioDTOaDAO(usuDao));			
+				listaUsuDto.add(usuarioDTOaDAO(usuDao));
+			
+			System.out.println("[INFO] [UsuarioDAOaDTOImpl-listaUsuarioDAOaDTO()] - Conversión correcta de lista de usuarios de DAO a DTO");
+			FicheroLog.escribir("[INFO] [UsuarioDAOaDTOImpl-listaUsuarioDAOaDTO()] - Conversión correcta de lista de usuarios de DAO a DTO");
+			
 			return listaUsuDto;
 			
 		}catch(Exception ex) {
-			System.err.println("\n[ERROR] [UsuarioDAOaDTOImpl-listaUsuarioDAOaDTO()] - Al convertir la lista de usuarios de DAO a DTO: " + ex);
+			System.err.println("[ERROR] [UsuarioDAOaDTOImpl-listaUsuarioDAOaDTO()] - Al convertir la lista de usuarios de DAO a DTO: " + ex);
 			FicheroLog.escribir("[ERROR] [UsuarioDAOaDTOImpl-listaUsuarioDAOaDTO()] - Al convertir la lista de usuarios de DAO a DTO");
 			return null;
 		}		

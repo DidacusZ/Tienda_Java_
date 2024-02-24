@@ -68,12 +68,14 @@ public class RegistroControlador {
 	public String RegistrarUsuario(@ModelAttribute UsuarioDTO usuarioDTO, Model modelo) {
 		try {
 			UsuarioDTO usuarioNuevo = usuarioServicioInterfaz.guardarUsuario(usuarioDTO);
-				/*		
+			
+			/*		
 			if (usuarioNuevo == null) {
 				modelo.addAttribute("emailYaRegistrado", "Ya existe un usuario con ese email");
 				System.err.println("email registr");
 				return "registro";
-			}*/
+			}
+			*/
 			
 			return "inicioSesion";
 			

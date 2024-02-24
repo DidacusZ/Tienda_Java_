@@ -17,7 +17,7 @@ public class FicheroLog {
 	public static void escribir(String contenido) {
 		
 		//String rutaArchivo = "C:\\Users\\Altair\\Desktop\\Proy\\ficheroLog.txt";
-		String rutaArchivo = "C:\\Users\\clase\\Desktop\\Proyecto grupo 3\\ficheroLog.txt";
+		String rutaArchivo = "C:\\Users\\clase\\Desktop\\Versiones java\\ficheroLog.txt";
 		
 		try {
             FileWriter escritor = new FileWriter(rutaArchivo, true); // true para que agregue al final del archivo

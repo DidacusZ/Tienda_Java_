@@ -24,7 +24,10 @@ public class UsuarioServicioImpl implements UsuarioServicioInterfaz {
 	private BCryptPasswordEncoder encriptarClave;
 
 	@Autowired
-	private UsuarioDTOaDAOInterfaz usuarioDTOaDAO;	
+	private UsuarioDTOaDAOInterfaz usuarioDTOaDAO;
+	
+	@Autowired
+	private ImagenServicioInterfaz ImagenServicioInterfaz;
 	
 	/**
 	 * Inyección de dependencias
@@ -33,26 +36,28 @@ public class UsuarioServicioImpl implements UsuarioServicioInterfaz {
 	 * @param usuarioRepositorio
 	 * @param encriptarClave
 	 * @param usuarioDTOaDAO
+	 * @param imagenServicioInterfaz
 	 */
-	@Autowired
 	public UsuarioServicioImpl(UsuarioRepositorio usuarioRepositorio, BCryptPasswordEncoder encriptarClave,
-			UsuarioDTOaDAOInterfaz usuarioDTOaDAO) {
+			UsuarioDTOaDAOInterfaz usuarioDTOaDAO,
+			com.tienda5.servicios.ImagenServicioInterfaz imagenServicioInterfaz) {
 		super();
 		this.usuarioRepositorio = usuarioRepositorio;
 		this.encriptarClave = encriptarClave;
 		this.usuarioDTOaDAO = usuarioDTOaDAO;
+		ImagenServicioInterfaz = imagenServicioInterfaz;
 	}
-	
-
+	 
 	@Override
 	public UsuarioDTO guardarUsuario(UsuarioDTO usuarioDTO) {		
 		
-		try {			
+		try {
+
 			//Comprobamos si existe el email en BD
 			UsuarioDAO usuEmail = usuarioRepositorio.findFirstByEmail(usuarioDTO.getEmail());
 
 			if (usuEmail != null ) {
-				System.err.printf("\n[ERROR] [UsuarioServicioImpl-guardarUsuario()] - El email: %s ya existe en la BD",usuarioDTO.getEmail());
+				System.err.printf("\n[ERROR] [UsuarioServicioImpl-guardarUsuario()] - El email: %s ya existe en la BD\n",usuarioDTO.getEmail());
 				FicheroLog.escribir("[ERROR] [UsuarioServicioImpl-guardarUsuario()] - El email: " + usuarioDTO.getEmail() + " ya existe en la BD"+usuarioDTO);
 				//excepcion de tiempo de ejecución
 	            throw new IllegalArgumentException("\nEl email: " + usuarioDTO.getEmail() + " ya existe en la BD");	            
@@ -69,19 +74,22 @@ public class UsuarioServicioImpl implements UsuarioServicioInterfaz {
 			//encriptar contraseña
 			usuarioDTO.setClave(encriptarClave.encode(usuarioDTO.getClave()));
 			
-			UsuarioDAO usuario = usuarioDTOaDAO.usuarioDTOaDAO(usuarioDTO);
-			usuario.setRol("USUARIO");		
-			//foto
+			UsuarioDAO usuarioDao = usuarioDTOaDAO.usuarioDTOaDAO(usuarioDTO);
+			usuarioDao.setRol("USUARIO");
 			
+			//foto
+			if(usuarioDao.getImagen() == null)
+				usuarioDao.setImagen(ImagenServicioInterfaz.cargarFotoPredeterminada());			
+						
 			//confirmación de cuenta por token
 			
-			usuarioRepositorio.save(usuario);
+			usuarioRepositorio.save(usuarioDao);
 			
 			FicheroLog.escribir("[INFO] [UsuarioServicioImpl-guardarUsuario()] - El usuario " + usuarioDTO.getEmail() + " se ha registrado");			
 			return usuarioDTO;
 			
 		}catch(Exception e){
-			System.err.println("\n[ERROR] [UsuarioServicioImpl-guardarUsuario()] - Al guardar el usuario en BD: "+e);
+			System.err.println("[ERROR] [UsuarioServicioImpl-guardarUsuario()] - Al guardar el usuario en BD: "+e);
 			FicheroLog.escribir("[ERROR] [UsuarioServicioImpl-guardarUsuario()] - Al guardar el usuario en BD");
 		}
 		return null;
