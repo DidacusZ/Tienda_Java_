@@ -27,20 +27,27 @@ public class UsuarioDAOaDTOImpl implements UsuarioDAOaDTOInterfaz {
 	}
 
 	@Override
-	public UsuarioDTO usuarioDTOaDAO(UsuarioDAO usuarioDAO) {
+	public UsuarioDTO usuarioDAOaDTO(UsuarioDAO usuarioDAO) {
 
 		try {
 			UsuarioDTO usuarioDto = new UsuarioDTO();
+			usuarioDto.setId(usuarioDAO.getId());
 			usuarioDto.setNombre(usuarioDAO.getNombre());
-			usuarioDto.setMovil(usuarioDto.getMovil());
+			usuarioDto.setMovil(usuarioDAO.getMovil());
 			usuarioDto.setEmail(usuarioDAO.getEmail());
 			usuarioDto.setClave(usuarioDAO.getClave());
+			usuarioDto.setRol(usuarioDAO.getRol());
 			//imagen
 			if(usuarioDAO.getImagen() != null) {
 				usuarioDto.setImagen(
 						ImagenServicioInterfaz.ArrayBYTESaBase64(usuarioDAO.getImagen())
 						);
 			}
+			
+			//token y confirmacion
+			usuarioDto.setToken(usuarioDAO.getToken());
+			usuarioDto.setFechaExpiracionToken(usuarioDAO.getFechaExpiracionToken());
+			usuarioDto.setCuentaConfirmada(usuarioDAO.getCuentaConfirmada());
 
 			System.out.println("[INFO] [UsuarioDAOaDTOImpl-usuarioDTOaDAO()] - Conversión correcta de UsuarioDAO a UsuarioDTO");
 			FicheroLog.escribir("[INFO] [UsuarioDAOaDTOImpl-usuarioDTOaDAO()] - Conversión correcta de UsuarioDAO a UsuarioDTO");
@@ -60,7 +67,7 @@ public class UsuarioDAOaDTOImpl implements UsuarioDAOaDTOInterfaz {
 		
 		try {			
 			for(UsuarioDAO usuDao : listaUsuarioDAO)
-				listaUsuDto.add(usuarioDTOaDAO(usuDao));
+				listaUsuDto.add(usuarioDAOaDTO(usuDao));
 			
 			System.out.println("[INFO] [UsuarioDAOaDTOImpl-listaUsuarioDAOaDTO()] - Conversión correcta de lista de usuarios de DAO a DTO");
 			FicheroLog.escribir("[INFO] [UsuarioDAOaDTOImpl-listaUsuarioDAOaDTO()] - Conversión correcta de lista de usuarios de DAO a DTO");

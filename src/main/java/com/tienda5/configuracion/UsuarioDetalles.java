@@ -41,14 +41,14 @@ public class UsuarioDetalles implements UserDetailsService {
 		    }
 			//Construir la instancia con datos del usuario
 			UserBuilder contructor = null;
-		    	System.out.printf("\nEl suario %s ha iniciado sesión\n", email);
-		    	FicheroLog.escribir("[INFO] [UsuarioDetalles-loadUserByUsername()] El usuario " +email+ " ha iniciado sesión");
 
 		    	contructor = User.withUsername(email);
 		    	contructor.disabled(false);
 				contructor.password(usuario.getClave());
 				contructor.authorities(usuario.getRol());
-
+				
+				//System.out.printf("\nEl suario %s ha iniciado sesión\n", email);
+				//FicheroLog.escribir("[INFO] [UsuarioDetalles-loadUserByUsername()] El usuario " +email+ " ha iniciado sesión");
 			return contructor.build();
 		}catch(Exception e){
 			System.out.printf("\n[ERROR] [UsuarioDetalles-loadUserByUsername()] Al intentar iniciar sesion con el email: %s\n",email);

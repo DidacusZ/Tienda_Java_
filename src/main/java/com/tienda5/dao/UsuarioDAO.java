@@ -1,5 +1,6 @@
 package com.tienda5.dao;
 
+import java.util.Calendar;
 import java.util.List;
 
 import jakarta.persistence.*;
@@ -34,6 +35,16 @@ public class UsuarioDAO {
 	@Column(name = "img_producto", nullable = true)//imagen real bytes
 	private byte[] imagen;	
 	
+	
+	@Column(name = "token_recuperacion", nullable = true)
+	private String token;
+	
+	@Column(name = "fch_expiracion_token", nullable = true)
+	private Calendar fechaexpiracionToken;
+	
+	@Column(name = "cuenta_confirmada", nullable = true)//poner en false
+	private boolean cuentaConfirmada;
+	
 	//relaciones
 	
 	//usuario_carrito
@@ -44,10 +55,10 @@ public class UsuarioDAO {
 	@OneToMany(mappedBy = "usuario")
 	private List<CompraDAO> compra;
 
-        
-	//objetos
+	//constructores (por ahora no se han usado borrar al final)
 	public UsuarioDAO(long id, String nombre, String movil, String email, String clave, String rol, byte[] imagen,
-			CarritoDAO carrito, List<CompraDAO> compra) {
+			String token, Calendar fechaexpiracionToken, boolean cuentaConfirmada, CarritoDAO carrito,
+			List<CompraDAO> compra) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
@@ -56,19 +67,21 @@ public class UsuarioDAO {
 		this.clave = clave;
 		this.rol = rol;
 		this.imagen = imagen;
+		this.token = token;
+		this.fechaexpiracionToken = fechaexpiracionToken;
+		this.cuentaConfirmada = cuentaConfirmada;
 		this.carrito = carrito;
 		this.compra = compra;
 	}
 	public UsuarioDAO() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
-
-	//getters y setters
+	//getters y settters
 	public long getId() {
 		return id;
 	}
+
 	public void setId(long id) {
 		this.id = id;
 	}
@@ -76,6 +89,7 @@ public class UsuarioDAO {
 	public String getNombre() {
 		return nombre;
 	}
+
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
@@ -83,13 +97,15 @@ public class UsuarioDAO {
 	public String getMovil() {
 		return movil;
 	}
+
 	public void setMovil(String movil) {
 		this.movil = movil;
 	}
-	
+
 	public String getEmail() {
 		return email;
 	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
@@ -97,6 +113,7 @@ public class UsuarioDAO {
 	public String getClave() {
 		return clave;
 	}
+
 	public void setClave(String clave) {
 		this.clave = clave;
 	}
@@ -104,6 +121,7 @@ public class UsuarioDAO {
 	public String getRol() {
 		return rol;
 	}
+
 	public void setRol(String rol) {
 		this.rol = rol;
 	}
@@ -111,22 +129,35 @@ public class UsuarioDAO {
 	public byte[] getImagen() {
 		return imagen;
 	}
+
 	public void setImagen(byte[] imagen) {
 		this.imagen = imagen;
 	}
 
-	public CarritoDAO getCarrito() {
-		return carrito;
-	}
-	public void setCarrito(CarritoDAO carrito) {
-		this.carrito = carrito;
+	public String getToken() {
+		return token;
 	}
 
-	public List<CompraDAO> getCompra() {
-		return compra;
+	public void setToken(String token) {
+		this.token = token;
 	}
-	public void setCompra(List<CompraDAO> compra) {
-		this.compra = compra;
+
+	public Calendar getFechaExpiracionToken() {
+		return fechaexpiracionToken;
 	}
+
+	public void setFechaExpiracionToken(Calendar fechaexpiracionToken) {
+		this.fechaexpiracionToken = fechaexpiracionToken;
+	}
+
+	public boolean getCuentaConfirmada() {
+		return cuentaConfirmada;
+	}
+
+	public void setCuentaConfirmada(boolean cuentaConfirmada) {
+		this.cuentaConfirmada = cuentaConfirmada;
+	}
+
+
 
 }

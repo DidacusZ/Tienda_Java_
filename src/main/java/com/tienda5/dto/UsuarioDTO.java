@@ -1,5 +1,7 @@
 package com.tienda5.dto;
 
+import java.util.Calendar;
+
 /**
  * DTO usado para pasar la informacion del usuario entre capas (de la vista al
  * dao y del dao a la BD)
@@ -13,12 +15,14 @@ public class UsuarioDTO {
 	private String clave;
 	private String rol;
 	private String imagen;//Base64
-
-	public UsuarioDTO() {
-		super();
-	}
-
-	public UsuarioDTO(long id, String nombre, String movil, String email, String clave, String rol, String imagen) {
+	
+	private String token;
+	private Calendar fechaExpiracionToken;
+	private boolean cuentaConfirmada=true;
+	
+	//constructores
+	public UsuarioDTO(long id, String nombre, String movil, String email, String clave, String rol, String imagen,
+			String token, Calendar fechaExpiracionToken, boolean cuentaConfirmada) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
@@ -27,8 +31,16 @@ public class UsuarioDTO {
 		this.clave = clave;
 		this.rol = rol;
 		this.imagen = imagen;
+		this.token = token;
+		this.fechaExpiracionToken = fechaExpiracionToken;
+		this.cuentaConfirmada = cuentaConfirmada;
 	}
-
+	public UsuarioDTO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
+	//getters y setters
 	public long getId() {
 		return id;
 	}
@@ -83,6 +95,30 @@ public class UsuarioDTO {
 
 	public void setImagen(String imagen) {
 		this.imagen = imagen;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+
+	public Calendar getFechaExpiracionToken() {
+		return fechaExpiracionToken;
+	}
+
+	public void setFechaExpiracionToken(Calendar fechaExpiracionToken) {
+		this.fechaExpiracionToken = fechaExpiracionToken;
+	}
+
+	public boolean isCuentaConfirmada() {
+		return cuentaConfirmada;
+	}
+
+	public void setCuentaConfirmada(boolean cuentaConfirmada) {
+		this.cuentaConfirmada = cuentaConfirmada;
 	}
 
 	

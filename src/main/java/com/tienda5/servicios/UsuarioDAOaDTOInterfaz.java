@@ -12,7 +12,7 @@ public interface UsuarioDAOaDTOInterfaz {
 	 * @param usuarioDAO "DAO"
 	 * @return UsuarioDTO "DTO"
 	 */
-	public UsuarioDTO usuarioDTOaDAO(UsuarioDAO  usuarioDAO);
+	public UsuarioDTO usuarioDAOaDTO(UsuarioDAO  usuarioDAO);
 	
 	
 	/**

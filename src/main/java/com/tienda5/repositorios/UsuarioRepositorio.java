@@ -19,4 +19,10 @@ public interface UsuarioRepositorio extends JpaRepository<UsuarioDAO, Long> {
 	 */
 	public UsuarioDAO findFirstByEmail(String email);	
 
+	/**
+	 * Encuentra a un usuario por su token
+	 * @param token
+	 * @return
+	 */
+	public UsuarioDAO findByToken(String token);
 }

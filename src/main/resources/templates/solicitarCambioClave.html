@@ -24,34 +24,25 @@
             <div class="card shadow">  
             <div class="card-body">
     
-            <h4 class="card-title mt-0 text-center mb-4">Iniciar Sesión</h4>
+            <h4 class="card-title mt-0 text-center mb-4">Solicitar Cambiar Contraseña</h4>
                   
-            <form method="post" th:action="@{/procesarInicioSesion}" role="form">                
+            <form method="post" th:action="@{/iniciarCambioClave}" th:object="${usuarioDTO}">
+                           
                 <div class="form-group input-group mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text">Email:</span>
                       </div>
-                    <input name="username" class="form-control" placeholder="Email" type="email" required>
-                </div>
-                
-                <div class="form-group input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Contraseña:</span>
-                    </div>
-                    <input name="password" class="form-control" placeholder="Contraseña" type="password" required>
-                </div>             
+                    <input th:field="*{email}" class="form-control" placeholder="Email" type="email" required>
+                </div>                  
                                 
                 <div class="form-group mb-2">
-                    <button type="submit" class="btn btn-primary btn-block"> Iniciar Sesión </button>
+                    <button type="submit" class="btn btn-primary btn-block"> Solicitar cambiar </button>
                 </div>
                 
-                <p class="text-center">¿No estas registrado?
-                <a th:href="@{/registro}">Registrate</a>
+                <p class="text-center">¿No quieres cambiarla?
+                <a th:href="@{/inicioSesion}">Inicia sesión</a>
                 </p>
-                
-                <p class="text-center">¿Has olvidado tu contraseña?
-                <a th:href="@{/iniciarCambioClave}">Cambiar contraseña</a>
-                </p>
+
             </form>
 
             </div>
