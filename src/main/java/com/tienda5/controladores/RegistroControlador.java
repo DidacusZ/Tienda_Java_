@@ -52,6 +52,7 @@ public class RegistroControlador {
 			modelo.addAttribute("usuarioDTO", new UsuarioDTO());		
 			return "registro";
 		}catch(Exception e){
+			modelo.addAttribute("error",true);
 			FicheroLog.escribir("[ERROR] [RegistroControlador-mostrarRegistro()] - Al entrar en la vista registro");
 			System.err.println("\n[ERROR] [[RegistroControlador-mostrarRegistro()] - Al entrar en la vista registro: "+e);
 			return "registro";
@@ -67,25 +68,22 @@ public class RegistroControlador {
 	@PostMapping
 	public String RegistrarUsuario(@ModelAttribute UsuarioDTO usuarioDTO, Model modelo) {
 		try {
-			UsuarioDTO usuarioNuevo = usuarioServicioInterfaz.guardarUsuario(usuarioDTO);
+			FicheroLog.escribir("[INFO] [RegistroControlador-RegistrarUsuario()]");
+			UsuarioDTO usuarioDto = usuarioServicioInterfaz.guardarUsuario(usuarioDTO);
 			
-			/*		
-			if (usuarioNuevo == null) {
-				modelo.addAttribute("emailYaRegistrado", "Ya existe un usuario con ese email");
-				System.err.println("email registr");
+			if (usuarioDto == null) {
+				modelo.addAttribute("emailError", true);
+				System.err.println("Ya existe un usuario con ese email");
+				FicheroLog.escribir("[ERROR] [RegistroControlador-RegistrarUsuario()] - Ya existe email");
 				return "registro";
 			}
-			*/
-			
-			return "inicioSesion";
-			
-		} catch (IllegalArgumentException e) {
-	        modelo.addAttribute("emailYaRegistrado", "Ya existe un usuario con ese email");
-	        return "registro";
-		        
+			modelo.addAttribute("exitoRegistro", true);
+			return "registro";//se redirige a inicioSesion desde vista
+					        
 		}catch(Exception e){
+			modelo.addAttribute("error",true);
 			FicheroLog.escribir("[ERROR] [RegistroControlador-RegistrarUsuario()] - Al mandar datos para registrar al usuario");
-			System.err.println("\n[ERROR] [[RegistroControlador-RegistrarUsuario()] - Al mandar datos para registrar al usuario: "+e);
+			System.err.println("[ERROR] [[RegistroControlador-RegistrarUsuario()] - Al mandar datos para registrar al usuario: "+e);
 			return "registro";
 		}		
 	}

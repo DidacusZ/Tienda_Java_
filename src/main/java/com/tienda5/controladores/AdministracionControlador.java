@@ -8,12 +8,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.tienda5.Fichero.FicheroLog;
 import com.tienda5.dto.UsuarioDTO;
 import com.tienda5.servicios.ImagenServicioInterfaz;
 import com.tienda5.servicios.UsuarioServicioInterfaz;
@@ -40,30 +42,35 @@ public class AdministracionControlador {
 	@GetMapping
     public String administracion(Model model, HttpServletRequest request, Authentication authentication) {
 		try {
-			//
-			List<UsuarioDTO> usuariosDTO = new ArrayList<>();			
-
+			FicheroLog.escribir("[INFO] [AdministracionControlador-administracion()]");
+	        
 			model.addAttribute("usuariosDTO", usuarioServicioInterfaz.todosUsuarios());			
 		
 			if (request.isUserInRole("ROLE_ADMIN")) {
 				return "administracion";
 			}
-			//
-			model.addAttribute("noAdmin", "No eres admin");
-			model.addAttribute("nombreUsuario", authentication.getName());
 			return "permisoDenegado";
 		} catch (Exception e) {
-			model.addAttribute("Error", "Ocurrió un error al obtener la lista de usuarios");
+			model.addAttribute("error",true);
+			FicheroLog.escribir("[ERROR] [AdministracionControlador-administracion()]");
 			return "index";
 		}		
 	}
-	
-	
-	@GetMapping("/crearUsuario")
-	public String crearUsuario() {
-		return "crearUsuario";		
-	}
 		
+	
+	/**
+	 * Controlamos si el usuario no es administrador para la vista /administracion/eliminarUsuario
+	 * @param request
+	 * @return
+	 */
+	@GetMapping("/eliminarUsuario/**")
+	public String eliminarUsuario(HttpServletRequest request) {
+		if (request.isUserInRole("ROLE_USER")) {
+			FicheroLog.escribir("[ERROR] [AdministracionControlador-eliminarUsuario()] Permiso Denegado");
+			return "permisoDenegado";
+		}
+		return "redirect:/administracion";		
+	}
 	
 	/**
 	 * Solicitud para eliminar el usuario /eliminarUsuario/{id}
@@ -73,9 +80,9 @@ public class AdministracionControlador {
 	 * @return
 	 */
 	@PostMapping("/eliminarUsuario/{id}")
-	@GetMapping("/eliminarUsuario/{id}")
 	public String eliminarUsuario(@PathVariable Long id, Model model, HttpServletRequest request) {
-		try {	
+		try {
+			FicheroLog.escribir("[INFO] [AdministracionControlador-eliminarUsuario()]");
 			if (request.isUserInRole("ROLE_USER")) {
 				return "permisoDenegado";
 			}
@@ -84,28 +91,42 @@ public class AdministracionControlador {
 				List<UsuarioDTO> usuarios = usuarioServicioInterfaz.todosUsuarios();
 				
 				String emailUsuarioActual = request.getUserPrincipal().getName();
-				System.err.println("usuario actuall: "+emailUsuarioActual);
-				
+				System.err.println("usuario actual: "+emailUsuarioActual);				
 
 				if (emailUsuarioActual.equals(usuario.getEmail())) {
-					model.addAttribute("noTePuedesEliminar", "No puedes eliminarte a ti mismo como administrador");
-					model.addAttribute("usuarios", usuarios);
-					return "redirect:/administracion";
+					model.addAttribute("noBorrarse",true);
+					//model.addAttribute("usuarios", usuarios);
+					return "administracion";
 				}
 				usuarioServicioInterfaz.eliminarUsuario(id);
-				model.addAttribute("eliminacionCorrecta", "El usuario se ha eliminado correctamente");
 				model.addAttribute("usuarios", usuarioServicioInterfaz.todosUsuarios());
 				return "redirect:/administracion";	
 			}		
 
 		} catch (Exception e) {
-			model.addAttribute("Error", "Ocurrió un error al eliminar el usuario");
+			model.addAttribute("error",true);
+			FicheroLog.escribir("[ERROR] [AdministracionControlador-eliminarUsuario()]");
 			return "index";
 		}		
 	}	
 	
 	/**
-	 * solicitud para editar un usuario
+	 * Controlamos si el usuario no es administrador para la vista /administracion/editarUsuario
+	 * @param request
+	 * @return
+	 */
+	@GetMapping("/editarUsuario/**")
+	public String editarUsuario(HttpServletRequest request) {
+		if (request.isUserInRole("ROLE_USER")) {
+			FicheroLog.escribir("[ERROR] [AdministracionControlador-editarUsuario()] Permiso Denegado");
+			return "permisoDenegado";
+		}
+		return "redirect:/administracion";		
+	}
+	
+	
+	/**
+	 * solicitud para editar un usuario por id
 	 * @param id
 	 * @param model
 	 * @param request
@@ -114,38 +135,59 @@ public class AdministracionControlador {
 	@PostMapping("/editarUsuario/{id}")
 	public String editarUsuario(@PathVariable Long id, Model model, HttpServletRequest request) {
 		try {
-			if (request.isUserInRole("ROLE_USER")) {
-				model.addAttribute("noAdmin", "No tiene permiso para realizar esta accion");
-				return "permisoDenegado";
-			} else {
+			FicheroLog.escribir("[INFO] [AdministracionControlador-editarUsuario()]");
+
 				UsuarioDTO usuarioDTO = usuarioServicioInterfaz.buscarPorId(id);
-				if (usuarioDTO == null) {
-					return "administracionUsuarios";
-				}
+
 				model.addAttribute("usuarioDTO", usuarioDTO);
 				return "editarUsuario";
-			}
+			
 		} catch (Exception e) {
-			model.addAttribute("Error", "Ocurrió un error al obtener el usuario para editar");
+			model.addAttribute("error",true);
+			FicheroLog.escribir("[ERROR] [AdministracionControlador-editarUsuario()]");
 			return "index";
 		}
 	}
 	
-	@PostMapping("/procesarEditarUsuario/")
+	/**
+	 * Controlamos si el usuario no es administrador para la vista /administracion/procesarEditarUsuario
+	 * @param request
+	 * @return
+	 */
+	@GetMapping("/procesarEditarUsuario")
+	public String procesarEditarUsuario(HttpServletRequest request) {
+		if (request.isUserInRole("ROLE_USER")) {
+			FicheroLog.escribir("[ERROR] [AdministracionControlador-procesarEditarUsuario()] Permiso Denegado");
+			return "permisoDenegado";
+		}
+		return "redirect:/administracion";
+		
+	}
+	
+	/**
+	 * recibe los datos del formulario
+	 * @param id
+	 * @param nombre
+	 * @param movil
+	 * @param rol
+	 * @param model
+	 * @return
+	 */
+	@PostMapping("/procesarEditarUsuario")
 	public String procesarEditarUsuario(@RequestParam("id") Long id, @RequestParam("nombre") String nombre, @RequestParam("movil") String movil,
-			@RequestParam("rol") String rol, @RequestParam("imagen") MultipartFile imagen, Model model) {
+			@RequestParam("rol") String rol,/* @RequestParam("imagen") MultipartFile imagen,*/ Model model) {
 		try {
+			FicheroLog.escribir("[INFO] [AdministracionControlador-procesarEditarUsuario()]");
 			UsuarioDTO usuarioDTO = new UsuarioDTO();
 			usuarioDTO.setId(id);
 			usuarioDTO.setNombre(nombre);
 			usuarioDTO.setMovil(movil);
-			
 			if (rol.equals("Administrador")) {
 				usuarioDTO.setRol("ROLE_ADMIN");
 			}else {
 				usuarioDTO.setRol(rol);
 			}
-			
+			/*
 			if (!imagen.isEmpty()) {
 				String fotoUsuario = imagenServicioInterfaz.ArrayBYTESaBase64(imagen.getBytes());
 				usuarioDTO.setImagen(fotoUsuario);
@@ -154,15 +196,98 @@ public class AdministracionControlador {
 		        String fotoActual = usuarioActualDTO.getImagen();
 				usuarioDTO.setImagen(fotoActual);
 			}
-			
+			*/
 			usuarioServicioInterfaz.editarUsuario(usuarioDTO);
-			model.addAttribute("edicionCorrecta", "El Usuario se ha editado correctamente");
-			model.addAttribute("usuarios", usuarioServicioInterfaz.todosUsuarios());
-			return "administracionUsuarios";
+			model.addAttribute("exitoEdicion",true);
+			//model.addAttribute("usuarios", usuarioServicioInterfaz.todosUsuarios());
+			return "redirect:/administracion";
 		} catch (Exception e) {
-			model.addAttribute("Error", "Ocurrió un error al editar el usuario");
-			return "dashboard";
+			model.addAttribute("error",true);
+			FicheroLog.escribir("[ERROR] [AdministracionControlador-procesarEditarUsuario()]");
+			return "index";
 		}
 	}
+	
+	
+	/**
+	 * vista para crear un usuario desde administracion ha /administracion/crearUsuario
+	 * @param modelo
+	 * @param request
+	 * @return
+	 */
+	@GetMapping("/crearUsuario")
+	public String crearUsuario(Model modelo, HttpServletRequest request) {
+		try {
+			FicheroLog.escribir("[INFO] [AdministracionControlador-crearUsuario()]");
+			
+			if (request.isUserInRole("ROLE_USER")) {
+				FicheroLog.escribir("[ERROR] [AdministracionControlador-crearUsuario()] Permiso Denegado");
+				return "permisoDenegado";
+			}
+			
+			modelo.addAttribute("usuarioDTO", new UsuarioDTO());
+			return "crearUsuario";
+			
+		} catch (Exception e) {
+			modelo.addAttribute("error",true);
+			FicheroLog.escribir("[ERROR] [AdministracionControlador-crearUsuario()]");
+			return "administracion";
+		}
+	}
+	
+	
+	/**
+	 * Controlamos si el usuario no es administrador para la vista /administracion/procesarCrearUsuario
+	 * @param request
+	 * @return
+	 */
+	@GetMapping("/procesarCrearUsuario")
+	public String procesarCrearUsuario(HttpServletRequest request) {
+		if (request.isUserInRole("ROLE_USER")) {
+			FicheroLog.escribir("[ERROR] [AdministracionControlador-procesarCrearUsuario()] Permiso Denegado");
+			return "permisoDenegado";
+		}
+		return "redirect:/administracion";
+	}
+	
+	/**
+	 * Guardamos la info del nuevo usuario
+	 * @param usuarioDTO
+	 * @param modelo
+	 * @param request
+	 * @return
+	 */
+	@PostMapping("/procesarCrearUsuario")
+	public String procesarCrearUsuario(@ModelAttribute UsuarioDTO usuarioDTO, Model modelo, HttpServletRequest request) {
+		
+		try {
+			FicheroLog.escribir("[INFO] [AdministracionControlador-procesarCrearUsuario()]");
+			
+			UsuarioDTO usuarioDto = usuarioServicioInterfaz.guardarUsuario(usuarioDTO);
+						
+			if (usuarioDto == null) {
+				modelo.addAttribute("emailError", true);
+				FicheroLog.escribir("[ERROR] [AdministracionControlador-procesarCrearUsuario()] - Ya existe email");
+				return "crearUsuario";
+			}
+			modelo.addAttribute("exitoRegistro", true);
+			return "crearUsuario";
+			
+		}catch(Exception e){
+			modelo.addAttribute("error",true);
+			FicheroLog.escribir("[ERROR] [AdministracionControlador-procesarCrearUsuario()]");
+			return "administracion";
+		}
+	}
+	
+	
+	/**
+	 * Control de todas las rutas que no existen 
+	 */
+	@GetMapping("/**")
+    public String PaginaNoEncontrada() {
+		FicheroLog.escribir("[INFO] [AdministracionControlador-PaginaNoEncontrada()]");
+        return "paginaNoEncontrada";
+    }
     
 }

@@ -16,7 +16,7 @@ import jakarta.persistence.Table;
  * Entidad representada en la BD como la tabla productos (modelo virtual) DAO
  */
 @Entity
-@Table(name = "productos", schema = "logica")
+@Table(name = "productos", schema = "gestion_logica_negocio")
 public class ProductoDAO {
 
 	@Id
@@ -24,10 +24,10 @@ public class ProductoDAO {
 	@Column(name = "id_producto", nullable = false)
 	private long id;
 
-	@Column(name = "nom_producto", nullable = true)
+	@Column(name = "nom_producto", nullable = false)
 	private String nombre;
 
-	@Column(name = "desc_producto", nullable = true)
+	@Column(name = "desc_producto", nullable = false)
 	private String descripcion;
 
 	@Column(name = "precio_producto", nullable = false)
@@ -45,7 +45,7 @@ public class ProductoDAO {
 	@ManyToMany
     @JoinTable(
         name = "productos_carritos",
-        schema = "logica",
+        schema = "gestion_logica_negocio",
         joinColumns = @JoinColumn(name = "id_producto"),//relación de esta entidad
         inverseJoinColumns = @JoinColumn(name = "id_carrito")//relación de la otra entidad
     )

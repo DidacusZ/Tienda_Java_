@@ -42,7 +42,7 @@ public interface UsuarioServicioInterfaz {
 	 * @param token
 	 * @return UsuarioDTO
 	 */
-	public UsuarioDTO encontrarUsuarioPorToken(String token);
+	public UsuarioDTO buscarUsuarioPorToken(String token);
 	
 		
 	////CRUD////
@@ -73,6 +73,14 @@ public interface UsuarioServicioInterfaz {
 	 * @param usuarioDTO usuario que se edita
 	 */
 	public void editarUsuario(UsuarioDTO usuarioDTO);
+
+
+	/**
+	 * comprueba si la cuenta esta confirmada
+	 * @param name
+	 * @return
+	 */
+	public boolean CuentaConfirmada(String email);
 	
 	
 	

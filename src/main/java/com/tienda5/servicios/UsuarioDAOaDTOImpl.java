@@ -39,6 +39,8 @@ public class UsuarioDAOaDTOImpl implements UsuarioDAOaDTOInterfaz {
 			usuarioDto.setRol(usuarioDAO.getRol());
 			//imagen
 			if(usuarioDAO.getImagen() != null) {
+				System.out.println("[INFO] [UsuarioDAOaDTOImpl-usuarioDTOaDAO()] - convertir imagen a dto");
+				FicheroLog.escribir("[INFO] [UsuarioDAOaDTOImpl-usuarioDTOaDAO()] - convertir imagen a dto");
 				usuarioDto.setImagen(
 						ImagenServicioInterfaz.ArrayBYTESaBase64(usuarioDAO.getImagen())
 						);

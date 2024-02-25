@@ -57,12 +57,12 @@ public class Seguridad {
     	//Configura:
     	
     	//las reglas de autorización para las peticiones HTTP
-        http.authorizeHttpRequests(auth -> auth.requestMatchers("/inicioSesion","/registro","/confirmarCuenta","/iniciarCambioClave","/cambiarClave","/js/**").permitAll()
+        http.authorizeHttpRequests(auth -> auth.requestMatchers("/inicioSesion","/registro","/confirmarCuenta","/clave/**","/js/**").permitAll()
         										.anyRequest().authenticated()//Pide autenticación para cualquier otra petición HTTP
             )
             //Inicio de sesión y la página de inicio de sesión
             .formLogin(login -> login.loginPage("/inicioSesion")//Página de inicio de sesión personalizada
-                     				 .defaultSuccessUrl("/", true)//Redirección de inicio de sesión exitoso
+                     				 .defaultSuccessUrl("/principal", true)//Redirección de inicio de sesión exitoso
                      				 .loginProcessingUrl("/procesarInicioSesion")//Establece la URL de procesamiento para el formulario de inicio de sesión
             )
             //Cierre de sesión

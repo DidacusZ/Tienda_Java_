@@ -100,7 +100,7 @@ public class UsuarioServicioImpl implements UsuarioServicioInterfaz {
 				usuarioDao.setCuentaConfirmada(false);
 				// Generar token de confirmación
 				String token = encriptarClave.encode(RandomStringUtils.random(30));
-				usuarioDao.setToken(token);
+				usuarioDao.setToken(token);//token no caduca
 
 				// Guardar el usuario en la base de datos
 				usuarioRepositorio.save(usuarioDao);
@@ -125,16 +125,16 @@ public class UsuarioServicioImpl implements UsuarioServicioInterfaz {
 	@Override
 	public boolean confirmarCuenta(String token) {
 		try {
+			FicheroLog.escribir("[INFO] [UsuarioServicioImpl-confirmarCuenta()]");
 			//bucamos al usuario por el token
 			UsuarioDAO usuarioDao = usuarioRepositorio.findByToken(token);
-
+			
 			usuarioDao.setCuentaConfirmada(true);//confirmamos la cuenta
 			usuarioDao.setToken(null);//borramos el token
 			usuarioRepositorio.save(usuarioDao);
 
-			System.out.println("[INFO] [UsuarioServicioImpl-confirmarCuenta()] - Cuenta confirmada correctamente");
-			FicheroLog.escribir("[INFO] [UsuarioServicioImpl-confirmarCuenta()] - Cuenta confirmada correctamente");
 			return true;
+			
 		}catch(Exception e){
 			System.err.println("[ERROR] [UsuarioServicioImpl-confirmarCuenta()] - Al confirmar la cuenta: "+e);
 			FicheroLog.escribir("[ERROR] [UsuarioServicioImpl-confirmarCuenta()] - Al confirmar la cuenta");
@@ -145,6 +145,7 @@ public class UsuarioServicioImpl implements UsuarioServicioInterfaz {
 
 	@Override
 	public boolean cambiarClavePorToken(UsuarioDTO usuarioDTO) {
+		System.err.println("entra en cambiarClavePorToken");
 		try {
 			UsuarioDAO usuarioDao = usuarioRepositorio.findByToken(usuarioDTO.getToken());
 
@@ -168,9 +169,9 @@ public class UsuarioServicioImpl implements UsuarioServicioInterfaz {
 
 
 	@Override
-	public UsuarioDTO encontrarUsuarioPorToken(String token) {
-
+	public UsuarioDTO buscarUsuarioPorToken(String token) {
 		try {
+			System.err.println("entra en encontrarUsuarioPorToken()");
 			UsuarioDAO usuarioDao = usuarioRepositorio.findByToken(token);
 
 				UsuarioDTO usuario = usuarioDAOaDTO.usuarioDAOaDTO(usuarioDao);
@@ -196,7 +197,7 @@ public class UsuarioServicioImpl implements UsuarioServicioInterfaz {
 				//Creamos el token y la fecha de expiracion del mismo
 				String token = encriptarClave.encode(RandomStringUtils.random(30));
 				Calendar fechaExpiracion = Calendar.getInstance();
-				fechaExpiracion.add(Calendar.MINUTE, 10);
+				fechaExpiracion.add(Calendar.MINUTE, 10);//tiempo token
 
 				usuarioDao.setToken(token);
 				usuarioDao.setFechaExpiracionToken(fechaExpiracion);
@@ -226,7 +227,12 @@ public class UsuarioServicioImpl implements UsuarioServicioInterfaz {
 
 	@Override
 	public List<UsuarioDTO> todosUsuarios() {
-		return usuarioDAOaDTO.listaUsuarioDAOaDTO(usuarioRepositorio.findAll());
+		
+		// Obtener la lista de usuarios ordenados por ID desde la base de datos
+        List<UsuarioDAO> usuariosDAO = usuarioRepositorio.findAllByOrderByIdAsc();
+        
+		//return usuarioDAOaDTO.listaUsuarioDAOaDTO(usuarioRepositorio.findAll());
+		return usuarioDAOaDTO.listaUsuarioDAOaDTO(usuariosDAO);
 	}
 
 
@@ -262,28 +268,45 @@ public class UsuarioServicioImpl implements UsuarioServicioInterfaz {
 	}
 
 
-
 	@Override
 	public void editarUsuario(UsuarioDTO usuarioDTO) {
 		try {
+			FicheroLog.escribir("[INFO] [UsuarioServicioImpl-editarUsuario()]");
 			UsuarioDAO usuarioDao = usuarioRepositorio.findById(usuarioDTO.getId()).orElse(null);
-
+			System.err.println("dto"+usuarioDTO.getRol());
+			System.err.println("dao"+usuarioDao.getRol());
 			usuarioDao.setNombre(usuarioDTO.getNombre());
 			usuarioDao.setMovil(usuarioDTO.getMovil());
 			usuarioDao.setRol(usuarioDTO.getRol());
+			System.err.println("dto"+usuarioDTO.getRol());
+			System.err.println("dao"+usuarioDao.getRol());
 			//foto
 			//usuarioDao.setImagen(imagenServicioInterfaz.base64aArrayBYTES(usuarioDTO.getImagen()));
 
 			usuarioRepositorio.save(usuarioDao);
 		} catch (PersistenceException pe) {
-			System.out.println("[Error UsuarioServicioImpl - actualizarUsuario()] Al modificar el usuario " + pe.getMessage());
-			
+			System.err.println("[ERROR] [UsuarioServicioImpl-editarUsuario()]");
+			FicheroLog.escribir("[ERROR] [UsuarioServicioImpl-editarUsuario()]");
 		}
 		
 	}
 
 
-
+	@Override
+	public boolean CuentaConfirmada(String email) {
+		try {
+			FicheroLog.escribir("[INFO] [UsuarioServicioImpl-CuentaConfirmada()]");
+			UsuarioDAO usuarioDao = usuarioRepositorio.findFirstByEmail(email);
+			if (usuarioDao != null && usuarioDao.getCuentaConfirmada()) {
+				return true;
+			}
+		} catch (Exception e) {
+			System.err.println("[ERROR] [UsuarioServicioImpl-CuentaConfirmada()]");
+			FicheroLog.escribir("[ERROR] [UsuarioServicioImpl-CuentaConfirmada()]");
+		}	
+		return false;
+	}
+	
 
 
 }

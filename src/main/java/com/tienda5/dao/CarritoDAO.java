@@ -13,16 +13,13 @@ import jakarta.persistence.Table;
  * Entidad representada en la BD como la tabla carritos (modelo virtual) DAO
  */
 @Entity
-@Table(name = "carritos", schema = "logica")
+@Table(name = "carritos", schema = "gestion_logica_negocio")
 public class CarritoDAO {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_carrito", nullable = false)
 	private long id;
-	
-	@Column(name = "id_producto", nullable = false)
-	private long id_producto;
 
 	@Column(name = "cant_carrito", nullable = false)
 	private int cantidad;

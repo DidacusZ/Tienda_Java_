@@ -5,25 +5,29 @@
 	<meta charset="utf-8">
 	<title>Bienvenido a mi Tienda</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+	<script th:src="@{/js/script.js}"></script>
 </head>
 
 <body>
 
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 		<div class="container-fluid">
-		  <a class="navbar-brand" th:href="@{/}">Tienda de Gorras</a>
+		  <a class="navbar-brand" th:href="@{/principal}">Tienda de Gorras</a>
 		  <button class="navbar-toggler" type="button">
 			<span class="navbar-toggler-icon"></span>
 		  </button>
 		  <div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 			  <li class="nav-item">
-				<a class="nav-link" th:href="@{/}">Inicio</a>
+				<a class="nav-link" th:href="@{/principal}">Inicio</a>
 			  </li>
+			 <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
+              <a class="nav-link" th:href="@{/administracion}">Administración</a>
+            </li>
 			</ul>
-			
-			<form class="d-flex" th:action="@{/cerrarSesion}" method="post">
-			  <button class="btn btn-danger" type="submit">Cerrar Sesión</button>
+						
+			<form class="d-flex" th:action="@{/cerrarSesion}" method="post" id="cerrarSesion">
+			  <button class="btn btn-danger" onclick="cerrarSesion()">Cerrar Sesión</button>
 			</form>
 			
 		  </div>
@@ -40,7 +44,7 @@
         <div class="row">
           <div class="col"><h2>Lista de Usuarios</h2></div>
           <div class="col-3">
-            <form th:action="@{administracion/}" method="get" class="d-grid">
+            <form th:action="@{/administracion/crearUsuario}" method="get" class="d-grid">
               <button class="btn btn-primary" type="submit">Crear un usuario</button>
             </form>
           </div>
@@ -61,7 +65,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="usuarioDTO : ${usuariosDTO}">
+                <tr th:each="usuarioDTO : ${usuariosDTO}" th:sort="${usuarioDTO.id}">
                 
                     <td th:text="${usuarioDTO.id}"></td>
                     <td th:text="${usuarioDTO.nombre}"></td>
@@ -77,15 +81,25 @@
                     </td>
                     <!-- Botón de Eliminar -->
                     <td>
-						<form th:action="@{/administracion/eliminarUsuario/{id}(id=${usuarioDTO.id})}" method="post" class="d-grid">
-						    <button class="btn btn-danger" type="submit">Eliminar</button>
-						</form>						
+						<form th:action="@{/administracion/eliminarUsuario/{id}(id=${usuarioDTO.id})}" method="post" class="d-grid" id="eliminarUsuario">
+						    <button class="btn btn-danger" onclick="eliminarUsuario()">Eliminar</button>
+						</form>
                     </td>
                     
                 </tr>
             </tbody>
         </table>
         </div>
+        
+<script th:if="${noBorrarse}">
+    alert("No puedes eliminarte a ti mismo");
+	window.location.href = '/administracion';
+</script>
+ 
+<script th:if="${error}">
+    alert("Ha habido un ERROR");
+</script>
+
 </body>
 
 </html>

@@ -29,12 +29,11 @@ public class EmailServicioImpl implements EmailServicioInterfaz {
             MimeMessage mensaje = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mensaje, true, "UTF-8");
 
-            //helper.setFrom("diegozkw21@gmail.com");
             helper.setTo(emailDestino);
             helper.setSubject("Cambiar contraseña de la Tienda de Gorras");
 
             String urlDominio = "http://localhost:8080";
-            String urlDeRecuperacion = String.format("%s/cambiarClave?token=%s", urlDominio, token);
+            String urlDeRecuperacion = String.format("%s/clave/cambioClave?token=%s", urlDominio, token);
 
             String cuerpoMensaje = String.format(
             		cabeceraEmail+emailCambiarClave,
@@ -58,7 +57,6 @@ public class EmailServicioImpl implements EmailServicioInterfaz {
             MimeMessage mensaje = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mensaje, true, "UTF-8");
 
-            //helper.setFrom("diegozkw21@gmail.com");
             helper.setTo(emailDestino);
             helper.setSubject("Confirmación de cuenta de la Tienda de Gorras");
 

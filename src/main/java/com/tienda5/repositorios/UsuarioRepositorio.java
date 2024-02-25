@@ -1,5 +1,7 @@
 package com.tienda5.repositorios;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -25,4 +27,10 @@ public interface UsuarioRepositorio extends JpaRepository<UsuarioDAO, Long> {
 	 * @return
 	 */
 	public UsuarioDAO findByToken(String token);
+	
+	/**
+	 * ordena
+	 * @return
+	 */
+	List<UsuarioDAO> findAllByOrderByIdAsc();
 }

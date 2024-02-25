@@ -9,7 +9,7 @@ import jakarta.persistence.*;
  * Entidad representada en la BD como la tabla usuarios (modelo virtual) DAO
  */
 @Entity
-@Table(name = "usuarios", schema = "gestion_usu")
+@Table(name = "usuarios", schema = "gestion_usuarios")
 public class UsuarioDAO {
 
 	@Id
@@ -55,24 +55,7 @@ public class UsuarioDAO {
 	@OneToMany(mappedBy = "usuario")
 	private List<CompraDAO> compra;
 
-	//constructores (por ahora no se han usado borrar al final)
-	public UsuarioDAO(long id, String nombre, String movil, String email, String clave, String rol, byte[] imagen,
-			String token, Calendar fechaexpiracionToken, boolean cuentaConfirmada, CarritoDAO carrito,
-			List<CompraDAO> compra) {
-		super();
-		this.id = id;
-		this.nombre = nombre;
-		this.movil = movil;
-		this.email = email;
-		this.clave = clave;
-		this.rol = rol;
-		this.imagen = imagen;
-		this.token = token;
-		this.fechaexpiracionToken = fechaexpiracionToken;
-		this.cuentaConfirmada = cuentaConfirmada;
-		this.carrito = carrito;
-		this.compra = compra;
-	}
+	//constructor
 	public UsuarioDAO() {
 		super();
 	}

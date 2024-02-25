@@ -18,7 +18,7 @@ import jakarta.persistence.Table;
  * Entidad representada en la BD como la tabla compras (modelo virtual) DAO
  */
 @Entity
-@Table(name = "compras", schema = "logica")
+@Table(name = "compras", schema = "gestion_logica_negocio")
 public class CompraDAO {
 	
 	@Id
@@ -43,7 +43,7 @@ public class CompraDAO {
 	@ManyToMany
     @JoinTable(
         name = "compras_productos",
-        schema = "logica",
+        schema = "gestion_logica_negocio",
         joinColumns = @JoinColumn(name = "id_compra"),//relación de esta entidad
         inverseJoinColumns = @JoinColumn(name = "id_producto")//relación de la otra entidad
     )

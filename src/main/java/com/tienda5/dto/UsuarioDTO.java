@@ -18,23 +18,9 @@ public class UsuarioDTO {
 	
 	private String token;
 	private Calendar fechaExpiracionToken;
-	private boolean cuentaConfirmada=true;
+	private boolean cuentaConfirmada;
 	
-	//constructores
-	public UsuarioDTO(long id, String nombre, String movil, String email, String clave, String rol, String imagen,
-			String token, Calendar fechaExpiracionToken, boolean cuentaConfirmada) {
-		super();
-		this.id = id;
-		this.nombre = nombre;
-		this.movil = movil;
-		this.email = email;
-		this.clave = clave;
-		this.rol = rol;
-		this.imagen = imagen;
-		this.token = token;
-		this.fechaExpiracionToken = fechaExpiracionToken;
-		this.cuentaConfirmada = cuentaConfirmada;
-	}
+	//constructor
 	public UsuarioDTO() {
 		super();
 		// TODO Auto-generated constructor stub

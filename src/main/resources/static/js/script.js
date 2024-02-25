@@ -2,53 +2,47 @@ function revisarContraseña() {
     const clave = document.getElementById('clave').value;
     const clave2 = document.getElementById('clave2').value;
     const mensajeClave = document.getElementById('mensajeClave');
-    mensajeClave.style.fontSize = '30px';
+    //mensajeClave.style.fontSize = '30px';
 
     if (clave === "" && clave2 === "") {
-        mensajeClave.innerHTML = '<span class="badge bg-danger">La contraseña no puede estar vacía</span>';
-        mensajeClave.style.color = 'black';
+        mensajeClave.innerHTML = '<div class="alert alert-danger" role="alert">La contraseña no puede estar vacía</div>';
+        //mensajeClave.style.color = 'black';
         document.getElementById("boton").disabled = true;
         boton.style.backgroundColor = "#959595";
         
     } else if (clave === clave2) 
     {
-        mensajeClave.innerHTML = '<span class="badge bg-success">Contraseña correcta</span>';
-        mensajeClave.style.color = 'black';
+        mensajeClave.innerHTML = '<div class="alert alert-success" role="alert">Contraseña correcta</div>';
+        //mensajeClave.style.color = 'black';
         document.getElementById("boton").disabled = false;
         boton.style.backgroundColor = "#007bff";
     } else 
     {
-        mensajeClave.innerHTML = '<span class="badge bg-danger">Las contraseñas no coinciden</span>';
-        mensajeClave.style.color = 'black';
+        mensajeClave.innerHTML = '<div class="alert alert-danger" role="alert">Las contraseñas no coinciden</div>';
+        //mensajeClave.style.color = 'black';
         document.getElementById("boton").disabled = true;
         boton.style.backgroundColor = "#959595";
     }
 }
 
-
-function mostrarNotificacion(titulo, mensaje, tipo) {
-    Swal.fire({
-        title: titulo,
-        text: mensaje,
-        icon: tipo,
-        confirmButtonText: 'OK',
-        customClass: {
-            confirmButton: 'btn btn-primary'  
-        }
-    });
+function cerrarSesion(){
+	if(window.confirm("Seguro que quieres cerrar sesión"))
+		document.getElementById('cerrarSesion').submit();
 }
 
 
+function eliminarUsuario(){
+	if(window.confirm("Seguro que quieres eliminar este Usuario"))
+		document.getElementById('eliminarUsario').submit();
+}
 
+function editarUsuario(){
+	window.confirm("Usuario editado correctamente")
+}
 
-
-
-
-
-
-
-
-
+function enviarCorreoConfirmarCuenta(){
+	window.alert("A continuación se le va a enviar un email con las instrucciones para confirmar su cuenta. Tardara 1 minuto aproximadamente en llegar")
+}
 
 
 
