@@ -32,7 +32,7 @@ public class UsuarioDAO {
 	@Column(name = "rol_usuario", nullable = true)
 	private String rol;
 	
-	@Column(name = "img_producto", nullable = true)//imagen real bytes
+	@Column(name = "img_usuario", nullable = true)//imagen real bytes
 	private byte[] imagen;	
 	
 	
