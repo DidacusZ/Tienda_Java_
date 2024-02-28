@@ -25,21 +25,10 @@ function revisarContraseña() {
     }
 }
 
-function cerrarSesion(){
-	if(window.confirm("Seguro que quieres cerrar sesión"))
-		document.getElementById('cerrarSesion').submit();
-}
-
-
-function eliminarUsuario(){
-	if(window.confirm("Seguro que quieres eliminar este Usuario"))
-		document.getElementById('eliminarUsario').submit();
-}
-
 function editarUsuario(){
 	window.confirm("Usuario editado correctamente")
 }
 
 function enviarCorreoConfirmarCuenta(){
-	window.alert("A continuación se le va a enviar un email con las instrucciones para confirmar su cuenta. Tardara 1 minuto aproximadamente en llegar")
+	window.alert("A continuación se le va a enviar un email con las instrucciones para confirmar su cuenta")
 }

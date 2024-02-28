@@ -10,12 +10,15 @@
 
 <body>
 
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<nav class="navbar navbar-expand navbar-dark bg-dark">
 		<div class="container-fluid">
+
 		  <a class="navbar-brand" th:href="@{/principal}">Tienda de Gorras</a>
-		  <button class="navbar-toggler" type="button">
-			<span class="navbar-toggler-icon"></span>
-		  </button>
+
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+			    <span class="navbar-toggler-icon"></span>
+			</button>
+      
 		  <div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 			  <li class="nav-item">
@@ -26,8 +29,8 @@
             </li>
 			</ul>
 						
-			<form class="d-flex" th:action="@{/cerrarSesion}" method="post" id="cerrarSesion">
-			  <button class="btn btn-danger" type="button" onclick="cerrarSesion()">Cerrar Sesión</button>
+			<form class="d-flex" th:action="@{/cerrarSesion}" method="post" onsubmit="return confirm('¿Quiéres cerrar sesión?');">
+			  <button class="btn btn-danger">Cerrar Sesión</button>
 			</form>
 			
 		  </div>

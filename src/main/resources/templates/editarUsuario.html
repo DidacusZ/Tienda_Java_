@@ -12,12 +12,15 @@
 
 <body>
 
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<nav class="navbar navbar-expand navbar-dark bg-dark">
 		<div class="container-fluid">
+
 		  <a class="navbar-brand" th:href="@{/principal}">Tienda de Gorras</a>
-		  <button class="navbar-toggler" type="button">
-			<span class="navbar-toggler-icon"></span>
-		  </button>
+
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+			    <span class="navbar-toggler-icon"></span>
+			</button>
+      
 		  <div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 			  <li class="nav-item">
@@ -28,13 +31,13 @@
             </li>
 			</ul>
 						
-			<form class="d-flex" th:action="@{/cerrarSesion}" method="post" id="cerrarSesion">
-			  <button class="btn btn-danger" type="button" onclick="cerrarSesion()">Cerrar Sesión</button>
+			<form class="d-flex" th:action="@{/cerrarSesion}" method="post" onsubmit="return confirm('¿Quiéres cerrar sesión?');">
+			  <button class="btn btn-danger">Cerrar Sesión</button>
 			</form>
 			
 		  </div>
 		</div>
-	  </nav>	
+	  </nav>
 
 <div class="pt-5 pb-5 mt-0 align-items-center d-flex bg-secondary" style="min-height: 93vh;">
     <div class="container-fluid">
@@ -104,7 +107,7 @@
 
                 <div class="mt-3 form-group d-grid">
                 
-                    <button id="boton" type="submit" onclick="editarUsuario()" class="btn btn-primary btn-block"> Editar usuario </button>
+                    <button id="boton" type="submit"  class="btn btn-primary btn-block"> Editar usuario </button>
                     
                 </div>
             </form>
@@ -117,7 +120,7 @@
     </div>
 </div>
 
-<script th:if="${exitoEdicion}">
+<script th:if="${editado}">
     alert("Usuario editado correctamente");
 	window.location.href = '/administracion';
 </script>

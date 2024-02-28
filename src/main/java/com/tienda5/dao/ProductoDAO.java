@@ -2,6 +2,7 @@ package com.tienda5.dao;
 
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -42,7 +43,7 @@ public class ProductoDAO {
 	//relaciones
 	
 	//productos-carritos
-	@ManyToMany
+	@ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
         name = "productos_carritos",
         schema = "gestion_logica_negocio",

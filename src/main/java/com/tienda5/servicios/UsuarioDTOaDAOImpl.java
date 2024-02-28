@@ -41,6 +41,7 @@ public class UsuarioDTOaDAOImpl implements UsuarioDTOaDAOInterfaz {
 						ImagenServicioInterfaz.base64aArrayBYTES(usuarioDTO.getImagen())
 						);
 			}
+			//cuenta confirmada
 
 			System.out.println("[INFO] [UsuarioDTOaDAOImpl-usuarioDTOaDAO()] - Conversión correcta de UsuarioDTO a UsuarioDAO");
 			FicheroLog.escribir("[INFO] [UsuarioDTOaDAOImpl-usuarioDTOaDAO()] - Conversión correcta de UsuarioDTO a UsuarioDAO");

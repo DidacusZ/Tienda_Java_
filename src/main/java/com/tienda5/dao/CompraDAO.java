@@ -3,6 +3,7 @@ package com.tienda5.dao;
 import java.util.Calendar;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -35,12 +36,13 @@ public class CompraDAO {
 	//relaciones
 	
 	//compras-usuario
-	@ManyToOne
+	
+	@ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_usuario")
     private UsuarioDAO usuario;
 	
 	//compras-productos
-	@ManyToMany
+	@ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
         name = "compras_productos",
         schema = "gestion_logica_negocio",

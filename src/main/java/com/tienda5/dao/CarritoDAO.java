@@ -1,11 +1,13 @@
 package com.tienda5.dao;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -25,8 +27,9 @@ public class CarritoDAO {
 	private int cantidad;
 
 	//carrito-usuario	
-    @OneToOne
-    @JoinColumn(name = "id_usuario")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_usuario")				/*, referencedColumnName = "id", nullable = false,
+            									oreignKey = @ForeignKey(name = "fk_carrito_usuario", foreignKeyDefinition = "FOREIGN KEY (id_usuario) REFERENCES usuario(id) ON DELETE CASCADE")*/
     private UsuarioDAO usuario;
 	
 }

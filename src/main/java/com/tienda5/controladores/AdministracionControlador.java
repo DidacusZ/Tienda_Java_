@@ -83,6 +83,7 @@ public class AdministracionControlador {
 	public String eliminarUsuario(@PathVariable Long id, Model model, HttpServletRequest request) {
 		try {
 			FicheroLog.escribir("[INFO] [AdministracionControlador-eliminarUsuario()]");
+			System.err.println("id a borrar:"+id);
 			if (request.isUserInRole("ROLE_USER")) {
 				return "permisoDenegado";
 			}
@@ -92,7 +93,7 @@ public class AdministracionControlador {
 				
 				String emailUsuarioActual = request.getUserPrincipal().getName();
 				System.err.println("usuario actual: "+emailUsuarioActual);				
-
+				System.err.println("id a borrar:"+id);
 				if (emailUsuarioActual.equals(usuario.getEmail())) {
 					model.addAttribute("noBorrarse",true);
 					//model.addAttribute("usuarios", usuarios);
@@ -136,9 +137,9 @@ public class AdministracionControlador {
 	public String editarUsuario(@PathVariable Long id, Model model, HttpServletRequest request) {
 		try {
 			FicheroLog.escribir("[INFO] [AdministracionControlador-editarUsuario()]");
-
+				
 				UsuarioDTO usuarioDTO = usuarioServicioInterfaz.buscarPorId(id);
-
+				model.addAttribute("editado", true	);
 				model.addAttribute("usuarioDTO", usuarioDTO);
 				return "editarUsuario";
 			
