@@ -39,18 +39,15 @@
 
 	<div>
 
-<!-- 
-	<div class="" th:if="${usuarioDTO.imagen != null}">
-		<img th:src="'data:image/jpeg;base64,' + ${usuarioDTO.imagen}" alt="Imagen desde la Base de Datos">
-     	<img th:src="'data:image/jpeg;base64,' + ${usuarioDTO.imagen}" class="rounded-circle img-fluid mx-auto" alt="Imagen de usuario" style="max-width: 100px; max-height: 100px;">
-    </div>
- -->
+<h1>Bienvenido: <span sec:authentication="principal.username"></span> a la tienda de gorras</h1>
+<h3>Actualmente solo disponemos de una versión con la capa administración</h3>
 
-		<h1>Bienvenido: <span sec:authentication="principal.username"></span></h1>
-	</div>
+</div>
+
 <script th:if="${error}">
     alert("Ha habido un ERROR");
 </script>	
+
 </body>
 
 </html>

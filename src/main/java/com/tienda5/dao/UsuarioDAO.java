@@ -48,13 +48,16 @@ public class UsuarioDAO {
 	//relaciones
 	
 	//usuario_carrito
-	@OneToOne(mappedBy = "usuario")
+	@OneToOne(mappedBy = "usuario")//,cascade = CascadeType.REMOVE)
 	private CarritoDAO carrito;
     
 	//usuario-compras
 	@OneToMany(mappedBy = "usuario")
 	private List<CompraDAO> compra;
 
+	
+	//@PreRemove para cuando borre usuario guardar como null  // aún así no se borraba
+	
 	//constructor
 	public UsuarioDAO() {
 		super();

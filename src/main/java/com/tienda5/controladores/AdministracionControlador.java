@@ -100,6 +100,7 @@ public class AdministracionControlador {
 					return "administracion";
 				}
 				usuarioServicioInterfaz.eliminarUsuario(id);
+				model.addAttribute("borrado",true);
 				model.addAttribute("usuarios", usuarioServicioInterfaz.todosUsuarios());
 				return "redirect:/administracion";	
 			}		
